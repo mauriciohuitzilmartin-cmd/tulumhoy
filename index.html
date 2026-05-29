@@ -1,132 +1,61 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Tulum Hoy</title>
-
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
-
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet" />
-
     <style>
-
         body { margin: 0; font-family: sans-serif; }
-
         #map { position: absolute; top: 0; bottom: 0; width: 100%; }
-
         #welcome-screen { position: fixed; inset: 0; background: #121619; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; color: #fff; }
-
         #welcome-screen.hidden { display: none; }
-
         .ui-panel { position: absolute; top: 20px; right: 20px; z-index: 100; background: white; padding: 20px; border-radius: 10px; width: 280px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-
         .hidden { display: none !important; }
-
         input, select, button { width: 100%; margin-bottom: 10px; padding: 10px; box-sizing: border-box; }
-
-        #photo-modal { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center; }
-
     </style>
-
 </head>
-
 <body>
 
-
-
     <button id="admin-btn" style="position:absolute; top:10px; left:10px; z-index:5; width:auto;" onclick="abrirAdmin()">Admin</button>
-
     <button id="back-btn" style="position:absolute; top:10px; left:80px; z-index:5; width:auto; display:none;" onclick="location.reload()">← Menú</button>
 
-
-
     <div id="welcome-screen">
-
         <h1>Tulum Hoy</h1>
-
         <button onclick="mostrarMapa('Sargazo')">🌿 Mapa de Sargazo</button>
-
         <button onclick="mostrarMapa('Eventos')">✨ Mapa de Eventos</button>
-
     </div>
-
-
-
-    <div id="photo-modal" class="hidden" onclick="this.classList.add('hidden')">
-
-        <img id="modal-img" src="" style="max-width:90%; max-height:90%; border-radius:10px;">
-
-    </div>
-
-
 
     <div id="admin-panel" class="ui-panel hidden">
-
         <button onclick="cerrarAdmin()">X Cerrar</button>
-
         <hr>
-
         <div id="admin-sargazo" class="hidden">
-
             <h4>Admin: Sargazo</h4>
-
             <input type="text" id="s-lugar" placeholder="Nombre playa">
-
             <input type="number" step="any" id="s-lat" placeholder="Latitud">
-
             <input type="number" step="any" id="s-lng" placeholder="Longitud">
-
             <select id="s-semaforo">
-
                 <option value="Verde">Verde (Limpio)</option>
-
                 <option value="Amarillo">Amarillo (Poco)</option>
-
                 <option value="Naranja">Naranja (Moderado)</option>
-
                 <option value="Rojo">Rojo (Abundante)</option>
-
             </select>
-
             <input type="file" id="s-foto" accept="image/*">
-
             <button onclick="guardarLugar('Sargazo')">Guardar Sargazo</button>
-
         </div>
-
         <div id="admin-eventos" class="hidden">
-
             <h4>Admin: Eventos</h4>
-
             <input type="text" id="e-lugar" placeholder="Nombre evento">
-
             <input type="number" step="any" id="e-lat" placeholder="Latitud">
-
             <input type="number" step="any" id="e-lng" placeholder="Longitud">
-
             <input type="text" id="e-desc" placeholder="Descripción">
-
             <input type="file" id="e-foto" accept="image/*">
-
             <button onclick="guardarLugar('Eventos')">Guardar Evento</button>
-
         </div>
-
     </div>
 
-
-
     <div id="map"></div>
-
     <script type="module" src="app.js"></script>
-
 </body>
-
-</html> 
-
+</html>
