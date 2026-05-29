@@ -1,4 +1,3 @@
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
@@ -8,7 +7,7 @@ const firebaseConfig = {
   projectId: "tulum-hoy",
   storageBucket: "tulum-hoy.firebasestorage.app",
   messagingSenderId: "138006744973",
-  appId: "1:138006744973:web:dd7b1fe86e803378f737c4"
+  appId: "1:785740850445:web:dd7b1fe86e803378f737c4"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -20,27 +19,15 @@ const map = new mapboxgl.Map({ container: 'map', style: 'mapbox://styles/mapbox/
 let categoriaActual = '';
 let marcadores = [];
 
-// Manejo global de teclado
-window.addEventListener('keydown', (e) => {
-    if (e.key === "Escape") {
-        document.getElementById('photo-modal').classList.add('hidden');
-        document.getElementById('admin-panel').classList.add('hidden');
-    }
-});
-
-const obtenerInfoSargazo = (nivel) => {
+// Función para colores de sargazo
+const obtenerColorSargazo = (nivel) => {
     switch (nivel) {
-        case 'Verde': return { color: '#28a745', desc: 'Limpio' };
-        case 'Amarillo': return { color: '#ffc107', desc: 'Poco' };
-        case 'Naranja': return { color: '#fd7e14', desc: 'Moderado' };
-        case 'Rojo': return { color: '#dc3545', desc: 'Abundante' };
-        default: return { color: '#3FB1CE', desc: '' };
+        case 'Verde': return '#28a745';
+        case 'Amarillo': return '#ffc107';
+        case 'Naranja': return '#fd7e14';
+        case 'Rojo': return '#dc3545';
+        default: return '#3FB1CE';
     }
-};
-
-window.abrirFoto = (url) => {
-    document.getElementById('modal-img').src = url;
-    document.getElementById('photo-modal').classList.remove('hidden');
 };
 
 window.abrirAdmin = () => {
@@ -63,14 +50,13 @@ window.mostrarMapa = async (coleccion) => {
     querySnapshot.forEach((doc) => {
         const d = doc.data();
         if (d.latitude && d.longitude) {
-            const info = coleccion === 'Sargazo' ? obtenerInfoSargazo(d.sargazo_level) : null;
-            const colorPin = info ? info.color : '#7b2cbf';
+            const colorPin = coleccion === 'Sargazo' ? obtenerColorSargazo(d.sargazo_level) : '#7b2cbf';
             
             const popupHTML = `
                 <div style="text-align:center;">
                     <h3>${d.title}</h3>
-                    ${d.sargazo_level ? `<p>Nivel: <b>${d.sargazo_level} (${info.desc})</b></p>` : `<p>${d.description || ''}</p>`}
-                    ${d.photoURL ? `<img src="${d.photoURL}" style="width:100px; border-radius:5px; cursor:pointer;" onclick="abrirFoto('${d.photoURL}')">` : ''}
+                    ${d.sargazo_level ? `<p>Nivel: <b>${d.sargazo_level}</b></p>` : `<p>${d.description || ''}</p>`}
+                    ${d.photoURL ? `<img src="${d.photoURL}" style="width:100px; border-radius:5px;">` : ''}
                 </div>
             `;
             const m = new mapboxgl.Marker({ color: colorPin })
@@ -105,6 +91,6 @@ window.guardarLugar = async (coleccion) => {
     else data.description = document.getElementById('e-desc').value;
 
     await addDoc(collection(db, coleccion), data);
-    alert("¡Guardado correctamente!");
+    alert("¡Guardado exitosamente!");
     location.reload();
 };
