@@ -14,6 +14,7 @@
         .ui-panel { position: absolute; top: 20px; right: 20px; z-index: 100; background: white; padding: 20px; border-radius: 10px; width: 280px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .hidden { display: none !important; }
         input, select, button { width: 100%; margin-bottom: 10px; padding: 10px; box-sizing: border-box; }
+        #photo-modal { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center; }
     </style>
 </head>
 <body>
@@ -25,6 +26,10 @@
         <h1>Tulum Hoy</h1>
         <button onclick="mostrarMapa('Sargazo')">🌿 Mapa de Sargazo</button>
         <button onclick="mostrarMapa('Eventos')">✨ Mapa de Eventos</button>
+    </div>
+
+    <div id="photo-modal" class="hidden" onclick="this.classList.add('hidden')">
+        <img id="modal-img" src="" style="max-width:90%; max-height:90%; border-radius:10px;">
     </div>
 
     <div id="admin-panel" class="ui-panel hidden">
